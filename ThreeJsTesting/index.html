@@ -9,11 +9,12 @@
 
     <script src="jquery-2.1.4.min.js"></script>
     <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
 
     <script>
         // set the scene size
-        var WIDTH = 400,
-          HEIGHT = 300;
+        var WIDTH = 1200,
+          HEIGHT = 800;
 
         // set some camera attributes
         var VIEW_ANGLE = 45,
@@ -35,6 +36,12 @@
             NEAR,
             FAR);
 
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        //controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = false;
+
         var scene = new THREE.Scene();
 
         // add the camera to the scene
@@ -55,12 +62,12 @@
             segments = 16,
             rings = 16;
 
-            // create the sphere's material
-            var sphereMaterial =
-              new THREE.MeshLambertMaterial(
-                {
-                    color: 0xCC0000
-                });
+        // create the sphere's material
+        var sphereMaterial =
+          new THREE.MeshLambertMaterial(
+            {
+                color: 0xCC0000
+            });
 
         // create a new mesh with
         // sphere geometry - we will cover
@@ -74,21 +81,81 @@
 
           sphereMaterial);
 
-        // add the sphere to the scene
-        scene.add(sphere);
+        var towerMaterial =
+            new THREE.MeshLambertMaterial(
+            {
+                color: 0xFFFFFF
+            });
 
+        var tHeight = 200;
+        var tWidthAndDepth = 50;
+
+        function makeTower() {
+            return new THREE.Mesh(
+            new THREE.BoxGeometry(tWidthAndDepth, tHeight, tWidthAndDepth),
+            towerMaterial);
+        }
+
+        var tower = makeTower();
+        var tower2 = makeTower();
+
+        tower2.position.x -= 100;
+
+        // add the sphere to the scene
+        //scene.add(sphere);
+        scene.add(tower);
+        scene.add(tower2);
+
+
+        function makeLight() {
+            var light = new THREE.PointLight(0xFFFFFF);
+            // set its position
+            light.position.x = 10;
+            light.position.y = 50;
+            light.position.z = 130;
+            return light;
+        }
 
         // create a point light
-        var pointLight =
-          new THREE.PointLight(0xFFFFFF);
+        var pointLight = makeLight();
 
-        // set its position
-        pointLight.position.x = 10;
-        pointLight.position.y = 50;
-        pointLight.position.z = 130;
+        var pointLight2 = makeLight();
+        pointLight2.position.x = -50;
+        pointLight2.position.y = 200;
+        pointLight2.position.z = 0;
+
+
+        var axisX = new THREE.Mesh(
+            new THREE.BoxGeometry(WIDTH, 5, 5),
+            new THREE.MeshBasicMaterial(
+            {
+                color: 0xFFFFFF
+            })
+            );
+        axisX.position.y = -HEIGHT / 8;
+        scene.add(axisX);
+
+        var axisY = new THREE.Mesh(
+            new THREE.BoxGeometry(5, WIDTH, 5),
+            new THREE.MeshBasicMaterial(
+            {
+                color: 0xFFFFFF
+            }));
+        axisY.position.y = axisX.position.y;
+        scene.add(axisY);
+
+        var axisZ = new THREE.Mesh(
+            new THREE.BoxGeometry(5, 5, WIDTH),
+            new THREE.MeshBasicMaterial(
+            {
+                color: 0xFFFFFF
+            }));
+        axisZ.position.y = axisX.position.y;
+        scene.add(axisZ);
 
         // add to the scene
-        scene.add(pointLight);
+        //scene.add(pointLight);
+        scene.add(pointLight2);
 
         // shim layer with setTimeout fallback
         window.requestAnimFrame = (function () {
@@ -149,26 +216,42 @@
             mesh.position.y += bounceDistance;
         }
 
+        function render() {
+
+            renderer.render(scene, camera);
+
+        }
+
         (function animloop() {
-            sphere.geometry.dynamic = true;
+            //sphere.geometry.dynamic = true;
 
-            switch (currentState) {
-                case state.squashing:
-                    handleSquashing(sphere);
-                    break;
-                case state.bouncing:
-                    handleBouncing(sphere);
-                    break;
-            }
+            //switch (currentState) {
+            //    case state.squashing:
+            //        handleSquashing(sphere);
+            //        break;
+            //    case state.bouncing:
+            //        handleBouncing(sphere);
+            //        break;
+            //}
 
-            // changes to the vertices
-            sphere.geometry.verticesNeedUpdate = true;
+            //// changes to the vertices
+            //sphere.geometry.verticesNeedUpdate = true;
 
-            // changes to the normals
-            sphere.geometry.normalsNeedUpdate = true;
+            //// changes to the normals
+            //sphere.geometry.normalsNeedUpdate = true;
+
+            var rotateAmount = Math.PI / (4 * 4 * 4 * 4);
+            tower.geometry.dynamic = true;
+
+            tower.rotateY(rotateAmount);
+
+            tower2.rotateY(-rotateAmount);
+
+            controls.update(); // required if controls.enableDamping = true, or if controls.autoRotate = true
+
             requestAnimFrame(animloop);
             // draw!
-            renderer.render(scene, camera);
+            render();
         })();
 
 

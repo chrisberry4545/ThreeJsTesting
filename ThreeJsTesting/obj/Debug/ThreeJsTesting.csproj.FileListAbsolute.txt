@@ -4,3 +4,9 @@ c:\users\chris\documents\visual studio 2013\Projects\ThreeJsTesting\ThreeJsTesti
 c:\users\chris\documents\visual studio 2013\Projects\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.csprojResolveAssemblyReference.cache
 c:\users\chris\documents\visual studio 2013\Projects\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.dll
 c:\users\chris\documents\visual studio 2013\Projects\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.pdb
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\bin\ThreeJsTesting.dll.config
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\bin\ThreeJsTesting.dll
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\bin\ThreeJsTesting.pdb
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.csprojResolveAssemblyReference.cache
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.dll
+C:\Dev\Experiments\ThreeJs\ThreeJsTesting\ThreeJsTesting\obj\Debug\ThreeJsTesting.pdb
